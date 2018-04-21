@@ -62,20 +62,32 @@ def qsg_edit_team(id):
         return redirect(url_for('main.qsg'))
     return render_template('qsg_edit_team.html', title='Home', form=form)
 
-@bp.route('/explore')
+@bp.route('/qsg_add_team', methods=['GET', 'POST'])
 @login_required
-def explore():
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.explore', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('main.explore', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('index.html', title='Explore',
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+def qsg_add_team():
+    teams = Teams.query.filter(Teams.user_id == current_user.id)
+    form = TeamForm()
+    if form.validate_on_submit():
+        team = Teams(team=form.team.data.upper(), abbr=form.abbr.data.upper(), author=current_user)
+        print(team, file=sys.stderr)
+        try:
+            db.session.add(team)
+            db.session.commit()
+            flash('{} was added!'.format(team.team), 'success')
+        except Exception as e:
+            flash('Team already exist', 'danger')
+            print(e, file=sys.stderr)
+        return redirect(url_for('main.qsg'))
+    return render_template('qsg_add_team.html', title='Home', form=form, teams=teams)
 
+@bp.route('/qsg_delete_team/<string:id>', methods=['POST'])
+@login_required
+def qsg_delete_team(id):
+    team = Teams.query.get(id)
+    db.session.delete(team)
+    db.session.commit()
+    flash('{} Deleted'.format(team.team), 'success')
+    return redirect(url_for('main.qsg'))
 
 @bp.route('/user/<username>')
 @login_required
