@@ -9,6 +9,7 @@ from app import db
 from app.main.forms import EditProfileForm, TeamForm
 from app.models import User, Teams
 #from app.translate import translate
+from app.main.xlsx_export import as export
 from app.main import bp
 
 
@@ -87,6 +88,12 @@ def qsg_delete_team(id):
     db.session.delete(team)
     db.session.commit()
     flash('{} Deleted'.format(team.team), 'success')
+    return redirect(url_for('main.qsg'))
+
+@bp.route('/qsg_gen_sch', methods=['POST'])
+@login_required
+def qsg_gen_sch():
+    flash('schedule Generated', 'success')
     return redirect(url_for('main.qsg'))
 
 @bp.route('/user/<username>')
