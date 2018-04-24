@@ -4,10 +4,11 @@ import random
 import sys, os
 #import pickle
 import configparser
+from flask_login import current_user, login_required
 from app import db
+from app.models import User, Teams
 
 class ScheduleGen(object):
-    mysql = MySQL()
     def __init__(self):
 
         self.open_file()
@@ -19,18 +20,10 @@ class ScheduleGen(object):
         """
             read python dict back from the file. If it doesn't exist then it creates it.
         """
-        # Create cursor
-        cur = mysql.connection.cursor()
-
-        # Get teams
-        result = cur.execute("SELECT * FROM teams")
-
-        # Fetch in dictionary form
-        self.teams_present = cur.fetchall()
-        print(self.teams_present.values, file=sys.stderr)
-
-        # Close Connection
-        cur.close()
+        teams_db = Teams.query.filter(Teams.user_id == current_user.id)
+        self.teams_present = {}
+        for team in teams_db:
+            self.teams_present[team.team] = team.abbr
 
     def team_info(self):
         self.teams = [x for x in self.teams_present.values()]
@@ -108,14 +101,12 @@ class ScheduleGen(object):
         return abs_path_to_resource
 
     def settings(self):
-        config = configparser.SafeConfigParser()
-        config.read(self.get_resource_path('settings.cfg'))
-        self.header_title = config.get('schedule', 'header_title')
-        self.header_on = config.getboolean('schedule', 'header_on')
-        self.quiz_morn = config.getint('schedule', 'quizes_morning')
-        self.quiz_after = config.getint('schedule', 'quizes_after')
-        self.quiz_start_time = config.get('schedule', 'quiz_start')
-        self.quiz_lunch_length = config.getint('schedule', 'lunch_length')
+        self.header_title = 'Welcome to the Columbia City quiz meet'
+        self.header_on = 'no'
+        self.quiz_morn = 6
+        self.quiz_after = 6
+        self.quiz_start_time = '09:30'
+        self.quiz_lunch_length = 40
         self.date_update = '08/10/2016'
         self.quiz_day = self.quiz_morn + self.quiz_after
 

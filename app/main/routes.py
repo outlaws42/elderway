@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app
+    jsonify, current_app, send_file
 from flask_login import current_user, login_required
 #from flask_babel import _, get_locale
 #from guess_language import guess_language
@@ -9,7 +9,7 @@ from app import db
 from app.main.forms import EditProfileForm, TeamForm
 from app.models import User, Teams
 #from app.translate import translate
-from app.main.xlsx_export import as export
+from app.main.xlsx_export import ExportXlsx
 from app.main import bp
 
 
@@ -61,7 +61,7 @@ def qsg_edit_team(id):
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
         return redirect(url_for('main.qsg'))
-    return render_template('qsg_edit_team.html', title='Home', form=form)
+    return render_template('qsg_add_team.html', title='Home', form=form, type='Edit Team')
 
 @bp.route('/qsg_add_team', methods=['GET', 'POST'])
 @login_required
@@ -79,7 +79,7 @@ def qsg_add_team():
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
         return redirect(url_for('main.qsg'))
-    return render_template('qsg_add_team.html', title='Home', form=form, teams=teams)
+    return render_template('qsg_add_team.html', title='Home', form=form, teams=teams,type='Add Team')
 
 @bp.route('/qsg_delete_team/<string:id>', methods=['POST'])
 @login_required
@@ -90,11 +90,20 @@ def qsg_delete_team(id):
     flash('{} Deleted'.format(team.team), 'success')
     return redirect(url_for('main.qsg'))
 
-@bp.route('/qsg_gen_sch', methods=['POST'])
+@bp.route('/qsg_gen_sch', methods=['GET', 'POST'])
 @login_required
 def qsg_gen_sch():
-    flash('schedule Generated', 'success')
-    return redirect(url_for('main.qsg'))
+    #teams = Teams.query.filter(Teams.user_id == current_user.id)
+    file = 'schedule.xlsx'
+    generate = ExportXlsx(file)
+    #for team in teams:
+    flash('Schedule Generated', 'success')
+    return redirect(url_for('main.qsg', download='true'))
+
+@bp.route('/return-files/')
+@login_required
+def return_files():
+    return send_file('static/schedule.xlsx', attachment_filename='schedule.xlsx')
 
 @bp.route('/user/<username>')
 @login_required

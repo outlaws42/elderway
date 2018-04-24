@@ -2,7 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h3>Quiz Schedule Generator</h3>
+    <h3>Quiz Schedule Generator <small>Beta</small></h3> 
     <div>
       QSG generates a schedule. It takes the teams then randomizes the matches between them. 3 teams of 3 quiz at a time.<br />
     </div>
@@ -33,4 +33,9 @@
     {% endfor %}
   </table>
     <a class="btn btn-success" href="/qsg_gen_sch">Generate Schedule</a>
+    {% if request.full_path == '/qsg?download=true' %}
+      <a class="btn btn-success" href="/return-files/" target="blank">Download Schedule</a>
+    {% endif %}
+  <br />
+  <br />
   {% endblock %}

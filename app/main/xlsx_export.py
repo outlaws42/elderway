@@ -1,24 +1,22 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-try:
-    import logging
-    import xlsxwriter
-    from app import db
-except(ImportError) as e:
-    logging.info('xlsx import  ' + str(e))
-
-# External imports
-try:
-    import generate_rand as rand
-except(ImportError) as e:
-    logging.info('generate_rand from xlsx_export  ' + str(e))
+import os, sys
+import xlsxwriter
+from app import db
+from app.main.generate_rand import ScheduleGen
 
 class ExportXlsx(object):
-    def __init__(self):
-        self.tms = rand.ScheduleGen()
+    def __init__(self,file):
+        self.file = file
+        self.tms = ScheduleGen()
         #self.open_path_file()
         self.excel_export()
 
+    def get_resource_path(self,rel_path):
+        dir_of_py_file = os.path.dirname(sys.argv[0])
+        rel_path_to_resource = os.path.join(dir_of_py_file, rel_path)
+        abs_path_to_resource = os.path.abspath(rel_path_to_resource)
+        return abs_path_to_resource
 
     def open_path_file(self):
         with open('path.txt', 'r') as path_text:
@@ -35,7 +33,7 @@ class ExportXlsx(object):
 
     def excel_export(self):  # Requires xlsxwriter module to work
             #file_ = input('Select a name for your schedule (No spaces):  ') or 'schedule'
-            workbook = xlsxwriter.Workbook('test.xlsx')
+            workbook = xlsxwriter.Workbook(self.get_resource_path('../../app/static/{}'.format(self.file)))
             worksheet = workbook.add_worksheet('Meet')
             worksheet.set_landscape()
             worksheet.set_page_view()
