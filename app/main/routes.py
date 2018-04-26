@@ -26,6 +26,14 @@ def index():
     return render_template('index.html', title='Home')
 
 
+@bp.route('/qsg_desktop', methods=['GET', 'POST'])
+def qsg_desktop():
+    return render_template('qsg_desktop.html', title='QSG Desktop', type='QSG Desktop')
+
+@bp.route('/weather-kiosk', methods=['GET', 'POST'])
+def weather_kiosk():
+    return render_template('weather_kiosk.html', title='Weather-Kiosk', type='Weather-Kiosk')
+
 
 @bp.route('/qsg', methods=['GET', 'POST'])
 @login_required
@@ -119,12 +127,10 @@ def edit_profile():
     form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('main.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
