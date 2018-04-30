@@ -11,7 +11,7 @@
 
 
 {% block navbar %}
-    <nav class="navbar navbar-default">
+      <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -20,15 +20,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('main.index') }}">Elderway</a>
+                <a class="navbar-brand logo-font" href="{{ url_for('main.index') }}">Eldrway</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.qsg') }}">QSG Web</a></li>
-                    <li><a href="{{ url_for('main.qsg_desktop') }}">QSG Desktop</a></li>
-                    <li><a href="{{ url_for('main.weather_kiosk') }}">Weather Kiosk</a></li>
+                <ul class="nav navbar-nav ufont">
+                    <li><a href="{{ url_for('main.qsg') }}">QSG Web Beta</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right ufont">
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                     {% else %}

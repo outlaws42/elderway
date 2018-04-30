@@ -2,40 +2,48 @@
 {% block app_content %}
 <div class="container">
   <div class="row">
-    <div class="col-sm-3">
-                <div class="demo-content">.col-sm-3</div>
+    <div class="col-sm-1">
+
     </div>
 
     <div class="col-sm-9">
-                <div class="demo-content bg-alt">
+                <div class="main-content">
+                  <ul>
+
+
                   <h2>{{type}}</h2>
-                  <b>Quiz schedule Generator Desktop</b><br />
-                  The desktop version at this point has more configuration then the
-                  <a href="{{ url_for('main.qsg') }}">web version</a> <br />
+                  <li><b>Quiz schedule Generator</b><br /></li>
+                  <li>This is a downloadable version of the quiz schedule generator. At this point
+                  it is more mature then the
+                  <a href="{{ url_for('main.qsg') }}">web version</a></li>
+                  <li>
+
+                  </li>
 
 
                   In this section you will find the packages or information to have QSG working on your system.
                   Releases are organized by versions. Each version has a folder containing the following files:<br />
 
 
-                  <b>QSG-Portable-x.y.z.zip:</b> Windows Binary Portable version
-                  <b>QSG-src_x.y.z.tar.gz :</b> Source code. Good for Linux<br />
+                  <li><b>QSG-Portable-x.y.z.zip:</b> Windows Binary Portable version</li>
+                  <li><b>QSG-src_x.y.z.tar.gz :</b> Source code. Good for Linux</li><br
 
 
-                  <b>NOTES:</b></li>
-                  <b>Portable:</b> This download option has all the dependancies included.  This can be used on a USB drive.
-                  <b>src:</b> This is just the source code but is good for Linux because it normally will have the required files already installed
-                  <br />
-                  <h3><b>Windows</b></h3>
+                  <li><b>NOTES:</b></li>
+                  <li><b>Portable:</b> This download option has all the dependancies included.  This can be used on a USB drive.</li>
+                  <li><b>src:</b> This is just the source code but is good for Linux because it normally will have the required files already installed</li>
+                  <li><h3><b>Windows</b></h3></li>
 
-                  You can download the latest Windows version here
-                  <a class="btn btn-success" href="https://sourceforge.net/projects/quiz-schedule-generator/files/latest/download?source=directory">
-                    Download
-                  </a>
-                  You download older versions here
-                  <a class="btn btn-success" href="https://sourceforge.net/projects/quiz-schedule-generator/files/1.0/">
-                    Download
-                  </a>
+                <li>You can download the latest Windows version
+                  <a  href="https://sourceforge.net/projects/quiz-schedule-generator/files/latest/download?source=directory">
+                    here
+                  </a></li>
+                 <li>You download older versions
+                  <a  href="https://sourceforge.net/projects/quiz-schedule-generator/files/1.0/">
+                    here
+                  </a></li>
+                  <button type="button" class="btn disabled">Info</button>
+                </ul>
                 </div>
     </div>
   </div>

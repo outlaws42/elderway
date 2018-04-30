@@ -2,11 +2,25 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h3>Welcome To Elderway</h3>
-  <div>
-    Thank 
-    Elderway is a playground for my apps and things I like.
-
+<div class="container">
+  <div class="col-sm-1">
   </div>
+  <div class="col-sm-9">
+    <div class="index-content">
+      <h3>Welcome To Elderway</h3>
+      Elderway is a playground for my apps and things I like. It may change  a
+      considerable amout especially in the beginning because I am learning as
+      I go.
+       <p>
+         The main feature at this point is the bible quiz schedule generator
+         that I am working on.  I created a
+         <a href="{{ url_for('auth.login') }}">desktop</a>
+         version of this previously but
+         I wanted work on a
+          <a href="{{ url_for('main.qsg') }}">web app</a>
+      </p>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
