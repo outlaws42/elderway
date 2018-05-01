@@ -8,21 +8,21 @@ ul {
         padding: 15px ;
         font-size: 18px;
         min-height: 550px;
-        background: #f2f2f2;
+        //background: #f2f2f2;
         margin-bottom: 15px;
-        border-radius: 10px;
+        //border-radius: 10px;
         font-family: 'Ubuntu', serif;
-        box-shadow: 2px 2px 5px #888888;
+        //box-shadow: 2px 2px 5px #888888;
       }
 .index-content{
               padding: 15px ;
               font-size: 25px;
-              min-height: 550px;
-              background: #f2f2f2;
+              min-height: 250px;
+              //background: #f2f2f2;
               margin-bottom: 15px;
-              border-radius: 10px;
+              //border-radius: 10px;
               font-family: 'Ubuntu', serif;
-              box-shadow: 2px 2px 5px #888888;
+              //box-shadow: 2px 2px 5px #888888;
 }
 
 .ufont{

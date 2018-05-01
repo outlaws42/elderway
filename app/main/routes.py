@@ -10,6 +10,7 @@ from app.main.forms import EditProfileForm, TeamForm
 from app.models import User, Teams
 #from app.translate import translate
 from app.main.xlsx_export import ExportXlsx
+from app.main.pdf_export import ExportPdf
 from app.main import bp
 
 
@@ -51,7 +52,7 @@ def qsg():
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
         return redirect(url_for('main.qsg'))
-    return render_template('qsg.html', title='Home', form=form, teams=teams)
+    return render_template('qsg.html', title='QSG Web', form=form, teams=teams)
 
 @bp.route('/qsg_edit_team/<string:id>', methods=['GET', 'POST'])
 @login_required
@@ -69,7 +70,7 @@ def qsg_edit_team(id):
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
         return redirect(url_for('main.qsg'))
-    return render_template('qsg_add_team.html', title='Home', form=form, type='Edit Team')
+    return render_template('qsg_add_team.html', title='Edit Team', form=form, type='Edit Team')
 
 @bp.route('/qsg_add_team', methods=['GET', 'POST'])
 @login_required
@@ -87,7 +88,7 @@ def qsg_add_team():
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
         return redirect(url_for('main.qsg'))
-    return render_template('qsg_add_team.html', title='Home', form=form, teams=teams,type='Add Team')
+    return render_template('qsg_add_team.html', title='Add Team', form=form, teams=teams,type='Add Team')
 
 @bp.route('/qsg_delete_team/<string:id>', methods=['POST'])
 @login_required
@@ -104,6 +105,7 @@ def qsg_gen_sch():
     #teams = Teams.query.filter(Teams.user_id == current_user.id)
     file = 'schedule.xlsx'
     generate = ExportXlsx(file)
+    #generate = ExportPdf
     #for team in teams:
     flash('Schedule Generated', 'success')
     return redirect(url_for('main.qsg', download='true'))
