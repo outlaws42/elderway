@@ -99,21 +99,27 @@ def qsg_delete_team(id):
     flash('{} Deleted'.format(team.team), 'success')
     return redirect(url_for('main.qsg'))
 
-@bp.route('/qsg_gen_sch', methods=['GET', 'POST'])
+@bp.route('/qsg_gen_sch/<name>', methods=['GET', 'POST'])
 @login_required
-def qsg_gen_sch():
+def qsg_gen_sch(name):
     #teams = Teams.query.filter(Teams.user_id == current_user.id)
-    file = 'schedule.xlsx'
-    generate = ExportXlsx(file)
-    #generate = ExportPdf
+    if name == 'excel':
+        file = 'schedule.xlsx'
+        generate = ExportXlsx(file)
+    else:
+        generate = ExportPdf()
     #for team in teams:
-    flash('Schedule Generated', 'success')
-    return redirect(url_for('main.qsg', download='true'))
+    flash('Schedule Generated {}'.format(name), 'success')
+    return redirect(url_for('main.qsg', name=name))
 
 @bp.route('/return-files/')
 @login_required
 def return_files():
+    #print(name, file=sys.stderr)
+    #if name == 'excel':
     return send_file('static/schedule.xlsx', attachment_filename='schedule.xlsx')
+    #else:
+    #    return send_file('static/schedule.pdf', attachment_filename='schedule.pdf')
 
 @bp.route('/user/<username>')
 @login_required

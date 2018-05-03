@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os, sys
 import math
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -12,8 +13,8 @@ from app.main.generate_rand import ScheduleGen
 
 class ExportPdf(object):
     def __init__(self):
-        self.tms = rand.ScheduleGen()
-        self.open_path_file()
+        self.tms = ScheduleGen()
+        #self.open_path_file()
         self.times()
         self.room_breakdown()
         self.breaks()
@@ -23,6 +24,12 @@ class ExportPdf(object):
     def open_path_file(self):
         with open('path.txt', 'r') as path_text:
             self.path=path_text.read()
+
+    def get_resource_path(self,rel_path):
+        dir_of_py_file = os.path.dirname(sys.argv[0])
+        rel_path_to_resource = os.path.join(dir_of_py_file, rel_path)
+        abs_path_to_resource = os.path.abspath(rel_path_to_resource)
+        return abs_path_to_resource
 
     def legend(self):
         # Populate the ledgend with team name and team abreaviation
@@ -220,7 +227,7 @@ class ExportPdf(object):
         row_morn = self.tms.quiz_morn + 2
         row_after = self.tms.quiz_after
         line_width = 2
-        path = self.path
+        path = self.get_resource_path('../../app/static/schedule.pdf')
         margin_size = .5
         doc = SimpleDocTemplate(path, pagesize=landscape(letter),topMargin = margin_size*inch,
                               bottomMargin = margin_size*inch, leftMargin = margin_size*inch, rightMargin = margin_size*inch)
