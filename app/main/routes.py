@@ -1,7 +1,8 @@
 import sys
-from datetime import datetime
+import time
+from datetime import datetime, date
 from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app, send_file
+    jsonify, current_app, send_file, send_from_directory
 from flask_login import current_user, login_required
 #from flask_babel import _, get_locale
 #from guess_language import guess_language
@@ -99,27 +100,20 @@ def qsg_delete_team(id):
     flash('{} Deleted'.format(team.team), 'success')
     return redirect(url_for('main.qsg'))
 
-@bp.route('/qsg_gen_sch/<name>', methods=['GET', 'POST'])
+@bp.route('/qsg_gen_sch/', methods=['GET', 'POST'])
 @login_required
-def qsg_gen_sch(name):
+def qsg_gen_sch():
     #teams = Teams.query.filter(Teams.user_id == current_user.id)
-    if name == 'excel':
-        file = 'schedule.xlsx'
-        generate = ExportXlsx(file)
-    else:
-        generate = ExportPdf()
-    #for team in teams:
-    flash('Schedule Generated {}'.format(name), 'success')
-    return redirect(url_for('main.qsg', name=name))
+    file = '{}_schedule_{}-{}.xlsx'.format(current_user.username,date.today(),time.strftime("%H-%M-%S"))
+    print(file,sys.stdout)
+    ExportXlsx(file)
+    flash('Schedule Generated', 'success')
+    return redirect(url_for('main.qsg', file=file))
 
-@bp.route('/return-files/')
+@bp.route('/return-files/<path:file>', methods=['GET', 'POST'])
 @login_required
-def return_files():
-    #print(name, file=sys.stderr)
-    #if name == 'excel':
-    return send_file('static/schedule.xlsx', attachment_filename='schedule.xlsx')
-    #else:
-    #    return send_file('static/schedule.pdf', attachment_filename='schedule.pdf')
+def return_files(file):
+    return send_from_directory(app.config['DOWNLOAD_FOLDER'], file , as_attachment=True )
 
 @bp.route('/user/<username>')
 @login_required
