@@ -16,15 +16,10 @@
     <div class="dropdown">
       <button class="btn btn-success">Generate Schedule</button>
       <div class="dropdown-content">
-        <a class="btn btn-success" href="{{url_for('main.qsg_gen_sch')}}">Excel Format</a>
+        <a class="btn btn-success" href="{{url_for('main.qsg_gen_sch', type='xlsx')}}">Excel Format</a>
+        <a class="btn btn-success" href="{{url_for('main.qsg_gen_sch', type='pdf')}}">PDF Format</a>
       </div>
     </div>
-    <a class="btn btn-success" href="{{url_for('main.return_files', file=file)}}">Download Schedule</a>
-    {% if request.full_path == '/qsg?name=pdf' or request.full_path == '/qsg?name=excel' %}
-      <a class="btn btn-success" href="{{url_for('main.return_files', file=file)}}">Download Schedule</a>
-    {% else %}
-      <a class="btn btn-success disabled" href="{{url_for('main.return_files', file=file)}}">Download Schedule</a>
-    {% endif %}
     <hr>
     <table class="table table-striped">
       <tr>

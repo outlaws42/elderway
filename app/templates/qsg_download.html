@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="container">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-9">
+          <div class="index-content">
+            <h3>Schedule Download</h3>
+            <p>
+                Your {% if type == 'xlsx' %} Microsoft Excel{% elif type == 'pdf' %} PDF {% endif %} formated file has 
+                been created you can download it with the following link. <br>
+            <a class="btn btn-success" href="{{url_for('main.return_files', filename=filename)}}">Download Schedule</a>
+            </p>
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+
+
+            

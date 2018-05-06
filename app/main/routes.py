@@ -100,20 +100,29 @@ def qsg_delete_team(id):
     flash('{} Deleted'.format(team.team), 'success')
     return redirect(url_for('main.qsg'))
 
-@bp.route('/qsg_gen_sch/', methods=['GET', 'POST'])
+@bp.route('/qsg_gen_sch/<type>', methods=['GET', 'POST'])
 @login_required
-def qsg_gen_sch():
+def qsg_gen_sch(type):
     #teams = Teams.query.filter(Teams.user_id == current_user.id)
-    file = '{}_schedule_{}-{}.xlsx'.format(current_user.username,date.today(),time.strftime("%H-%M-%S"))
-    print(file,sys.stdout)
-    ExportXlsx(file)
-    flash('Schedule Generated', 'success')
-    return redirect(url_for('main.qsg', file=file))
+    filename = '{}_schedule_{}-{}.{}'.format(current_user.username,date.today(),time.strftime("%H-%M-%S"),type)
+    print(filename)
+    if type == 'pdf':
+        ExportPdf(filename)
+    else:
+        ExportXlsx(filename)
+    
+    flash('Schedule Generated {}'.format(filename), 'success')
+    #return redirect(url_for('main.qsg', file=file))
+    #return send_from_directory(directory='static/schedule', filename=filename , as_attachment=True )
+    return render_template('qsg_download.html', filename=filename, type=type)
 
-@bp.route('/return-files/<path:file>', methods=['GET', 'POST'])
+@bp.route('/return-files/<filename>', methods=['GET', 'POST'])
 @login_required
-def return_files(file):
-    return send_from_directory(app.config['DOWNLOAD_FOLDER'], file , as_attachment=True )
+def return_files(filename):   
+    #uploads = os.path.join(current_app.root_path, app.config['DOWNLOAD_FOLDER'])
+    return send_from_directory(directory='static/schedule', filename=filename , as_attachment=True )
+    #return render_template('test.html', file=file)
+
 
 @bp.route('/user/<username>')
 @login_required

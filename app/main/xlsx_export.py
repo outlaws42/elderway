@@ -6,8 +6,8 @@ from app import db
 from app.main.generate_rand import ScheduleGen
 
 class ExportXlsx(object):
-    def __init__(self,file):
-        self.file = file
+    def __init__(self,filename):
+        self.filename = filename
         self.tms = ScheduleGen()
         #self.open_path_file()
         self.excel_export()
@@ -33,7 +33,7 @@ class ExportXlsx(object):
 
     def excel_export(self):  # Requires xlsxwriter module to work
             #file_ = input('Select a name for your schedule (No spaces):  ') or 'schedule'
-            workbook = xlsxwriter.Workbook(self.get_resource_path('../../app/static/{}'.format(self.file)))
+            workbook = xlsxwriter.Workbook(self.get_resource_path('../../app/static/schedule/{}'.format(self.filename)))
             worksheet = workbook.add_worksheet('Meet')
             worksheet.set_landscape()
             worksheet.set_page_view()

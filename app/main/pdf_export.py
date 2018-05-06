@@ -12,7 +12,8 @@ import reportlab.rl_settings
 from app.main.generate_rand import ScheduleGen
 
 class ExportPdf(object):
-    def __init__(self):
+    def __init__(self,filename):
+        self.filename =filename
         self.tms = ScheduleGen()
         #self.open_path_file()
         self.times()
@@ -227,7 +228,7 @@ class ExportPdf(object):
         row_morn = self.tms.quiz_morn + 2
         row_after = self.tms.quiz_after
         line_width = 2
-        path = self.get_resource_path('../../app/static/schedule.pdf')
+        path = self.get_resource_path('../../app/static/schedule/{}'.format(self.filename))
         margin_size = .5
         doc = SimpleDocTemplate(path, pagesize=landscape(letter),topMargin = margin_size*inch,
                               bottomMargin = margin_size*inch, leftMargin = margin_size*inch, rightMargin = margin_size*inch)
