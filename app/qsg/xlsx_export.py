@@ -3,7 +3,7 @@
 import os, sys
 import xlsxwriter
 from app import db
-from app.main.generate_rand import ScheduleGen
+from app.qsg.generate_rand import ScheduleGen
 
 class ExportXlsx(object):
     def __init__(self,filename):

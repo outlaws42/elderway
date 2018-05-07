@@ -1,7 +1,7 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-    {% if title %}{{ title }} - Elderway{% else %}'Welcome to Elderway{% endif %}
+    {% if title %}{{ title }} - Eldrway{% else %}'Welcome to Eldrway{% endif %}
 {% endblock %}
 
 {% block head %}
@@ -24,7 +24,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav ufont">
-                    <li><a href="{{ url_for('main.qsg') }}">QSG Web Beta</a></li>
+                    <li><a href="{{ url_for('qsg.qsg') }}">QSG Web Beta</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right ufont">
                     {% if current_user.is_anonymous %}

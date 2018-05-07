@@ -9,7 +9,7 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 import reportlab.rl_settings
-from app.main.generate_rand import ScheduleGen
+from app.qsg.generate_rand import ScheduleGen
 
 class ExportPdf(object):
     def __init__(self,filename):
