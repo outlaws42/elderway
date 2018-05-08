@@ -8,12 +8,6 @@ from app.main.forms import EditProfileForm, TeamForm
 from app.models import User, Teams
 from app.main import bp
 
-@bp.route('/.well-known/acme-challenge/<token_value>')
-def letsencrpyt(tmp):
-    with open('.well-known/acme-challenge/{}'.format(token_value)) as f:
-        answer = f.readline().strip()
-    return answer
-
 @bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
