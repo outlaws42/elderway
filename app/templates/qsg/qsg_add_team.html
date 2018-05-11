@@ -6,7 +6,7 @@
 </div>
 <div class="col-sm-5">
     <div class="main-content">
-    <h3>{{type}}</h3>
+    <h3>{% if type == 'Edit Team' %}{{team.team}}{% else %}{{type}}{% endif %}</h3>
     <div>
       <b>Team:</b> Name of your team(Max 75 characters)<br />
       <b>Team Abbreviation:</b> This will be the team represitation on the schedule (Max 3 characters)

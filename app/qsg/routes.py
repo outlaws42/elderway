@@ -18,7 +18,7 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
-@bp.route('/qsg', methods=['GET', 'POST'])
+@bp.route('/qsg', methods=['GET', 'POST'])  
 @login_required
 def qsg():
     teams = Teams.query.filter(Teams.user_id == current_user.id)
@@ -40,7 +40,7 @@ def qsg_edit_team(id):
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
         return redirect(url_for('qsg.qsg'))
-    return render_template('qsg/qsg_add_team.html', title='Edit Team', form=form, type='Edit Team')
+    return render_template('qsg/qsg_add_team.html', title='Edit Team', form=form, type='Edit Team', team=team)
 
 @bp.route('/qsg_add_team', methods=['GET', 'POST'])
 @login_required
