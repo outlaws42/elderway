@@ -22,32 +22,20 @@ def before_request():
 @login_required
 def qsg():
     teams = Teams.query.filter(Teams.user_id == current_user.id)
-    form = TeamForm()
-    if form.validate_on_submit():
-        team = Teams(team=form.team.data.upper(), abbr=form.abbr.data.upper(), author=current_user)
-        print(team, file=sys.stderr)
-        try:
-            db.session.add(team)
-            db.session.commit()
-            flash('{} was added!'.format(team.team), 'success')
-        except Exception as e:
-            flash('Team already exist', 'danger')
-            print(e, file=sys.stderr)
-        return redirect(url_for('qsg.qsg'))
-    return render_template('qsg/qsg.html', title='QSG Web', form=form, teams=teams)
+    return render_template('qsg/qsg.html', title='QSG Web', teams=teams)
 
 @bp.route('/qsg_edit_team/<string:id>', methods=['GET', 'POST'])
 @login_required
 def qsg_edit_team(id):
     team = Teams.query.get(id)
     form = TeamForm(obj=team)
-
     if form.validate_on_submit():
         form.populate_obj(team)
+        print(team.team.upper(), sys.stdout)
         try:
-            db.session.add(team)
+            db.session.merge(team)
             db.session.commit()
-            flash('{} was changed successfully!'.format(team.team), 'success')
+            flash('{} was changed successfully!'.format(team.team.upper()), 'success')
         except Exception as e:
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
@@ -60,8 +48,7 @@ def qsg_add_team():
     teams = Teams.query.filter(Teams.user_id == current_user.id)
     form = TeamForm()
     if form.validate_on_submit():
-        team = Teams(team=form.team.data.upper(), abbr=form.abbr.data.upper(), author=current_user)
-        print(team, file=sys.stderr)
+        team = Teams(team=form.team.data, abbr=form.abbr.data, author=current_user)
         try:
             db.session.add(team)
             db.session.commit()

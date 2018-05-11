@@ -1,3 +1,4 @@
+from sqlalchemy.orm import validates
 from datetime import datetime
 from hashlib import md5
 from time import time
@@ -59,5 +60,12 @@ class Teams(db.Model):
     __table_args__ = (db.UniqueConstraint('user_id', 'abbr', name='team_name'),
                  )
 
+
+
     def __repr__(self):
         return '<Teams {}>'.format(self.team)
+
+    @validates('team', 'abbr')
+    def convert_upper(self, key, value):
+        return value.upper()
+
