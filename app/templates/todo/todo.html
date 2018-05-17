@@ -17,14 +17,14 @@
         <th>MC Number</th>
         <th>Delmia</th>
         <th>Program Edited</th>
-        <th>Status</th>
+        <th>Priority</th>
         <th>FAL</th>  
         <!--<th>Date Created</th> -->
         <th></th>
         <th></th>
       </tr>
 
-      {% for todo in todos| sort(attribute='team') %}
+      {% for todo in todos| sort(attribute='status') %}
       <tr>
         <td><a href="edit_todo/{{todo.id}}">{{todo.todo}}</a></td>
         <td>{{todo.desc}}</td>
