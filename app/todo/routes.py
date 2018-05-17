@@ -52,7 +52,7 @@ def add_todo():
         try:
             db.session.add(todo)
             db.session.commit()
-            flash('{} was added!'.format(todo), 'success')
+            flash('{} was added!'.format(todo.todo), 'success')
         except Exception as e:
             flash('Team already exist', 'danger')
             print(e, file=sys.stderr)
