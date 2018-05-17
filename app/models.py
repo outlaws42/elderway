@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     team = db.relationship('Teams', backref='author', lazy='dynamic')
+    todo = db.relationship('Todo', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -68,4 +69,23 @@ class Teams(db.Model):
     @validates('team', 'abbr')
     def convert_upper(self, key, value):
         return value.upper()
+
+class Todo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    todo = db.Column(db.String(75), nullable=False)
+    desc = db.Column(db.String(150), nullable=True)
+    mc_number = db.Column(db.Integer)
+    dnc_doc = db.Column(db.String(50), nullable=True)
+    prog_edit = db.Column(db.String(50), nullable=True)
+    status = db.Column(db.String(50), nullable=True)
+    fal = db.Column(db.String(50), nullable=True)     
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    __table_args__ = (db.UniqueConstraint('user_id', 'todo', name='todo_name'),
+                 )
+
+    def __repr__(self):
+        return '<Todo {}>'.format(self.todo)
+
+
 

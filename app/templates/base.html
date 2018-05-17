@@ -25,6 +25,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav ufont">
                     <li><a href="{{ url_for('qsg.qsg') }}">QSG Web Beta</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('todo.todo') }}">Todo Beta</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right ufont">
                     {% if current_user.is_anonymous %}

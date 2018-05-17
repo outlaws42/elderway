@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<div class="col-xl-10">
+    <div class="main-content">
+
+    <h3>Todo <small>Beta</small></h3>
+    <br>
+    <a class="btn btn-primary plus-font" href="/add_todo">+</a>
+    <hr>
+    <table class="table table-striped">
+      <tr>
+        <th>Todo Name</th>
+        <th>Description</th>
+        <th>MC Number</th>
+        <th>Delmia</th>
+        <th>Program Edited</th>
+        <th>Status</th>
+        <th>FAL</th>  
+        <!--<th>Date Created</th> -->
+        <th></th>
+        <th></th>
+      </tr>
+
+      {% for todo in todos| sort(attribute='team') %}
+      <tr>
+        <td><a href="edit_todo/{{todo.id}}">{{todo.todo}}</a></td>
+        <td>{{todo.desc}}</td>
+        <td>{{todo.mc_number}}</td>
+        <td>{{todo.dnc_doc}}</td>
+        <td>{{todo.prog_edit}}</td>
+        <td>{{todo.status}}</td>
+        <td>{{todo.fal}}</td>
+
+        <!--<td>{{moment(todo.timestamp).format('LL')}}</td>-->
+        <!--<td><a href="edit_todo/{{todo.id}}" class="btn btn-success">Edit</a></td>-->
+        <td>
+        <form action="{{url_for('todo.delete_todo', id=todo.id)}}" method="post">
+          <input type="hidden" name="method" value="DELETE">
+          <input type="submit" value="Complete" class="btn btn-default">
+        </form>
+      </td>
+      </tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+  <br />
+  <br />
+  {% endblock %}
