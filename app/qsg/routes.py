@@ -22,7 +22,9 @@ def before_request():
 @login_required
 def qsg():
     teams = Teams.query.filter(Teams.user_id == current_user.id)
-    team_list = Teams.query.all()
+    team_list = []
+    for team in teams:
+        team_list.append(team)
     print(team_list)
     return render_template('qsg/qsg.html', title='QSG Web', teams=teams, team_list=team_list)
 
