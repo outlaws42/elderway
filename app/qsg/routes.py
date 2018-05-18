@@ -22,7 +22,9 @@ def before_request():
 @login_required
 def qsg():
     teams = Teams.query.filter(Teams.user_id == current_user.id)
-    return render_template('qsg/qsg.html', title='QSG Web', teams=teams)
+    team_list = Teams.query.all()
+    print(team_list)
+    return render_template('qsg/qsg.html', title='QSG Web', teams=teams, team_list=team_list)
 
 @bp.route('/qsg_edit_team/<string:id>', methods=['GET', 'POST'])
 @login_required

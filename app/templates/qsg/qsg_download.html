@@ -9,7 +9,7 @@
             <p>
                 Your {% if type == 'xlsx' %} Microsoft Excel{% elif type == 'pdf' %} PDF {% endif %} formated schedule has 
                 been created you can download it with the following link. <br>
-            <a class="btn btn-success" href="{{url_for('qsg.return_files', filename=filename)}}">Download Schedule</a>
+            <a class="btn btn-primary plus-font" href="{{url_for('qsg.return_files', filename=filename)}}">Download Schedule</a>
             </p>
             {% endblock %}
           </div>

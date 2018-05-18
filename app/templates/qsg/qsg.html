@@ -9,17 +9,28 @@
 
     <h3>Quiz Schedule Generator <small>Beta</small></h3>
     <div>
-      QSG generates a schedule. It takes the teams then randomizes the matches between them. 3 teams of 3 quiz at a time.<br />
+      QSG generates a schedule. It takes the teams then randomizes the matches 
+      between them. 3 teams of 3 quiz at a time.<br /> You must have at least 3 teams 
+      before you can generate a schedule.
     </div>
     <br>
-    <a class="btn btn-success plus-font" href="/qsg_add_team">+</a>
-    <div class="dropdown">
-      <button class="btn btn-success">Generate Schedule</button>
+
+    
+    <a class="btn btn-primary plus-font" href="/qsg_add_team">Add Team</a>
+    {% if team_list|length < 3 %}
+    <a class="btn btn-primary disabled plus-font" href="{{url_for('qsg.qsg_gen_sch', type='xlsx')}}">Excel Schedule</a>
+    <a class="btn btn-primary disabled plus-font" href="{{url_for('qsg.qsg_gen_sch', type='pdf')}}">PDF Schedule</a>
+    {% else %}
+    <a class="btn btn-primary plus-font" href="{{url_for('qsg.qsg_gen_sch', type='xlsx')}}">Excel Schedule</a>
+    <a class="btn btn-primary plus-font" href="{{url_for('qsg.qsg_gen_sch', type='pdf')}}">PDF Schedule</a>
+    {% endif %}
+   <!-- <div class="dropdown">
+      <button class="btn btn-success plus-font">Generate Excel Schedule</button>
       <div class="dropdown-content">
-        <a class="btn btn-success" href="{{url_for('qsg.qsg_gen_sch', type='xlsx')}}">Excel Format</a>
-        <a class="btn btn-success" href="{{url_for('qsg.qsg_gen_sch', type='pdf')}}">PDF Format</a>
+        <a class="btn btn-success plus-font" href="{{url_for('qsg.qsg_gen_sch', type='xlsx')}}">Excel Format</a>
+        <a class="btn btn-success plus-font" href="{{url_for('qsg.qsg_gen_sch', type='pdf')}}">PDF Format</a>
       </div>
-    </div>
+    </div>-->
     <hr>
     <table class="table table-striped">
       <tr>
@@ -38,7 +49,7 @@
         <td>
         <form action="{{url_for('qsg.qsg_delete_team', id=team.id)}}" method="post">
           <input type="hidden" name="method" value="DELETE">
-          <input type="submit" value="Delete" class="btn btn-danger">
+          <input type="submit" value="Delete" class="btn btn-default">
         </form>
       </td>
       </tr>
